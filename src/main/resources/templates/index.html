@@ -1,0 +1,98 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en" class="h-100">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Cover Template · Bootstrap v5.3</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css">
+    <link rel="canonical" href="https://getbootstrap.com/docs/5.3/examples/cover/">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+
+    <!-- Custom styles for this template -->
+    <link th:href="@{/css/cover.css}" rel="stylesheet" type="text/css" media="screen"/>
+
+</head>
+<body class="d-flex h-100 text-center text-bg-dark">
+
+<div class="cover-container d-flex w-100 h-100 p-3 mx-auto flex-column">
+    <header class="mb-auto">
+        <div>
+            <h3 class="float-md-start mb-0">
+                <svg class="w-36 text-white hidden lg:inline-block" width="136" height="36" fill="none"
+                     xmlns="http://www.w3.org/2000/svg">
+                    <path d="M91.8 27.4 89 28.6H78.6V7.4H89l2.7 1.2 1 2.9v13.3l-.9 2.6ZM97.6 3l-7-3H71v36h19.5l7.2-3.2 2.5-6.8V10.2L97.5 3ZM20.7 27.3 18 28.6H10l-2.5-4.8V12.2L10 7.4h8l2.6 1.1.6 1.9-4.7 7.7 4.8 7.7-.6 1.5Zm8.8-16.1-3-8.2-7-3h-14L0 10.4v15.2L5.5 36h14l7.2-3.2 2.8-7.9-4.3-6.8 4.3-7ZM128.5 0v26.2l-4.8 2.4h-5.4l-4.8-2.4V0H106v30.7l10.5 5.3h9l10.5-5.3V0h-7.5ZM65.4 0H44.7v7.4h20.7V0ZM65.4 28.6H44.7V36h20.7v-7.4ZM50 20.2V16l-1.2-1.1h-4.1v-4.1l-1.2-1.1h-4.2l-1.1 1V15H34l-1.2 1v4.3l1.1 1.1h4.2v4.1l1.1 1.1h4.2l1.2-1v-4.2h4l1.2-1.1Z"
+                          fill="currentColor" data-darkreader-inline-fill=""
+                          style="--darkreader-inline-fill:currentColor;"></path>
+                </svg>
+            </h3>
+
+            <nav class="nav nav-masthead justify-content-center float-md-end">
+                <a class="nav-link fw-bold py-1 px-0 active" aria-current="page" href="/index">Agenda</a>
+                <a class="nav-link fw-bold py-1 px-0" href="/nuevo">Registrar</a>
+                <a class="nav-link fw-bold py-1 px-0" href="https://github.com/eliasfire/bedu_fase2_grupo10/">Repositorio</a>
+            </nav>
+        </div>
+    </header>
+
+    <div th:if="${msgExito != null}"
+         class="alert alert-success alert-dismissible">
+        [[${msgExito}]]
+        <button type="button" class="btn btn-close" data-bs-dismiss="alert"></button>
+    </div>
+
+    <h1>Lista de Personas&nbsp;</h1>
+
+    &nbsp;
+    <table class="table table-dark  table-striped">
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>Nombre</th>
+            <th>Telefono</th>
+            <th>Email</th>
+            <th>Acciones</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="persona : ${listaPersonas}">
+            <td th:text="${persona.id}"></td>
+            <td th:text="${persona.nombre}"></td>
+            <td th:text="${persona.telefono}"></td>
+            <td th:text="${persona.email}"></td>
+
+            <td><a th:href="@{/{id}/editar/(id=${persona.id})}" class="btn btn-warning"><i
+                    class="bi bi-pencil-square"></i>&nbsp;Editar</a>
+                <a href="#" onclick="eliminar(this)" class="btn btn-danger"><i
+                        class="bi bi-trash3"></i>&nbsp;Eliminar</a>
+
+                <form th:action="@{/{id}/eliminar/(id=${persona.id})}"
+                      method="post"></form>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+    <div class="text-center my-3">
+        <a href="/nuevo" class="btn btn-primary"><i class="fas fa-user-plus"></i>&nbsp;Nueva Persona</a>
+    </div>
+
+    <footer class="mt-auto text-white-50">
+        <p>Utilizamos la plantilla Cover de <a href="https://getbootstrap.com/" class="text-white">Bootstrap</a>.</p>
+    </footer>
+</div>
+
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN"
+        crossorigin="anonymous"></script>
+<script>
+      function eliminar(elemento){
+    	  var ok = confirm('¿Desea eliminar a la persona?');
+    	  if(ok){
+    		  elemento.nextElementSibling.submit();
+    	  }
+      }
+
+</script>
+</body>
+</html>
